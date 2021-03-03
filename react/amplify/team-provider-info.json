@@ -1,0 +1,25 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-reactcognitocustomau-dev-211615-authRole",
+      "UnauthRoleArn": "arn:aws:iam::852307403105:role/amplify-reactcognitocustomau-dev-211615-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::852307403105:role/amplify-reactcognitocustomau-dev-211615-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-reactcognitocustomau-dev-211615-deployment",
+      "UnauthRoleName": "amplify-reactcognitocustomau-dev-211615-unauthRole",
+      "StackName": "amplify-reactcognitocustomau-dev-211615",
+      "StackId": "arn:aws:cloudformation:us-east-1:852307403105:stack/amplify-reactcognitocustomau-dev-211615/2adcea70-7a77-11eb-bd16-0eadc6b18409",
+      "AmplifyAppId": "ds76axwh7ybz"
+    },
+    "categories": {
+      "auth": {
+        "reactcognitocustomau48653ab9": {
+          "userPoolId": "us-east-1_5VLSDkV3W",
+          "userPoolName": "customauthflow",
+          "webClientId": "4bjtc3ons3bpmg38ah148a7el8",
+          "nativeClientId": "4bjtc3ons3bpmg38ah148a7el8"
+        }
+      }
+    }
+  }
+}

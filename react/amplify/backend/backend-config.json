@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "reactcognitocustomau48653ab9": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": true
+    }
+  }
+}
