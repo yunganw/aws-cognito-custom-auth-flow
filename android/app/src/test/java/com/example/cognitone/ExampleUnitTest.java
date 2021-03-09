@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.cognitone;
 
 import org.junit.Test;
 

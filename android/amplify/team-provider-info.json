@@ -1,0 +1,20 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-cognitone-dev-152656-authRole",
+            "UnauthRoleArn": "arn:aws:iam::852307403105:role/amplify-cognitone-dev-152656-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::852307403105:role/amplify-cognitone-dev-152656-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-cognitone-dev-152656-deployment",
+            "UnauthRoleName": "amplify-cognitone-dev-152656-unauthRole",
+            "StackName": "amplify-cognitone-dev-152656",
+            "StackId": "arn:aws:cloudformation:us-east-1:852307403105:stack/amplify-cognitone-dev-152656/f7b60900-cbdb-11ea-838d-0a4db9a5d67f",
+            "AmplifyAppId": "d2izdofhrhivsm"
+        },
+        "categories": {
+            "auth": {
+                "cognitOne2020": {}
+            }
+        }
+    }
+}
