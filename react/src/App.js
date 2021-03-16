@@ -17,7 +17,7 @@ function App() {
   
     let challengeResponse = "the answer for the challenge";
   
-    Auth.signIn("solariswu", "nopwd")
+    Auth.signIn("solariswu")
         .then(user => {
             if (user.challengeName === 'CUSTOM_CHALLENGE') {
                 // to send the answer of the custom challenge
