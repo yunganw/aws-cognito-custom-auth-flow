@@ -16,7 +16,7 @@
                         <br/>
                         <input name="email" id="email" class="form-control inputField-customizable" placeholder="Email address..."
                                 autocapitalize="none" required aria-label="email" value="" type="email" v-model="email">
-                        <button name="reset_my_password" type="submit" class="btn btn-primary submitButton-customizable">Confirm</button>
+                        <button name="confirm" type="submit" class="btn btn-primary submitButton-customizable">Confirm</button>
                     </form>
                 </div>
             </div>
@@ -42,11 +42,8 @@ export default {
                 authenticationFlowType: 'CUSTOM_AUTH'
             });
             
-            // let challengeResponse = "the answer for the challenge";
-
             Auth.signIn(this.email)
             .then(user => {
-                console.log ('user:' , user);
                 if (user.challengeName === 'CUSTOM_CHALLENGE') {
                     axios
                         .post('https://api.yungangwu.myinstance.com/magiclink/',{
@@ -54,16 +51,15 @@ export default {
                                 email: this.email,
                                 session: user.Session,
                             })
-                        .then(response => (this.info = response))
+                        .then(response => {
+                            this.info = response;
+                            console.log ("email link sent");
+                            this.email = "";
+                            alert ("Email Sent!");
+                        })
                         .catch(function (error) { 
                             console.log(error);
                         });
-
-                    console.log ("email link sent");
-                    // to send the answer of the custom challenge
-                    // Auth.sendCustomChallengeAnswer(user, challengeResponse)
-                    //     .then(user => console.log(user))
-                    //     .catch(err => console.log(err));
                 } else {
                     console.log(user);
                 }
