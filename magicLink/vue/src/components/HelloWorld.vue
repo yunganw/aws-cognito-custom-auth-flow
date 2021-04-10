@@ -19,10 +19,8 @@
                               <div>
                                  <div>
                                     <span class="idpDescription-customizable">Sign in with your corporate ID</span>
-                                    <input type="button" value="OIDC" class="btn btn-info idpButton-customizable" aria-label="OIDC"
-                                       />
                                     <input type="button" value="SAML" class="btn btn-info idpButton-customizable" aria-label="SAML"
-                                       />
+                                       onclick="window.location.href=&#39;https://magiclink.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=SAMLIDP&amp;redirect_uri=https://magiclink-yunganw.netlify.app&amp;response_type=CODE&amp;client_id=235qakl0if7b3vss5ikehppnmi&amp;scope=aws.cognito.signin.user.admin email openid phone profile&#39;"/>
                                     <input type="button" value="Email Login" class="btn btn-info idpButton-customizable" aria-label="Email-login"
                                        onclick="window.location.href='/login'"/>
                                  </div>
