@@ -20,9 +20,9 @@ const addLambdaTriggersToUserPool = (context:cdk.Construct, userpool:cognito.Use
   });
   
   const verifyAuthChallengeFn = new lambda.Function(context, 'cdkMagicVerifyAuth', {
-    runtime: lambda.Runtime.NODEJS_14_X,
+    runtime: lambda.Runtime.PYTHON_3_8,
     code: lambda.Code.fromAsset('lambda'),
-    handler: 'verifyauthchallenge.handler',
+    handler: 'verifyauthchallenge.lambda_handler',
   });
 
   const preSignUpFn = new lambda.Function(context, 'cdkMagicPreSignup', {
@@ -43,7 +43,7 @@ const addLambdaTriggersToUserPool = (context:cdk.Construct, userpool:cognito.Use
 
   const basicLambdaPolicy = new iam.Policy(context, 'customauthmagicfn-policy', {
     statements: [new iam.PolicyStatement({
-      actions: ['logs:DescribeUserPool', 'logs:CreateLogStream', 'logs:PutLogEvents'],
+      actions: ['dynamodb:GetItem','logs:DescribeUserPool', 'logs:CreateLogStream', 'logs:PutLogEvents'],
       resources: ['*'],
     })],
   });
