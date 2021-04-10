@@ -17,7 +17,7 @@
                         <input name="email" id="email" class="form-control inputField-customizable" placeholder="Email address..."
                                 autocapitalize="none" required aria-label="email" value="" type="email" v-model="email">
                         <button name="confirm" type="submit" class="btn btn-primary submitButton-customizable">Confirm</button>
-                        <input type="button" value="cancel" class="btn btn-info submitButton-customizable" aria-label="Cancel"
+                        <input type="button" value="Cancel" class="btn btn-info submitButton-customizable" aria-label="Cancel"
                                                                onclick="window.location.href='/'"/>
                         
                     </form>
@@ -62,6 +62,7 @@ export default {
                         })
                         .catch(function (error) { 
                             console.log(error);
+                            alert (error.message);
                         });
                 } else {
                     console.log(user);
