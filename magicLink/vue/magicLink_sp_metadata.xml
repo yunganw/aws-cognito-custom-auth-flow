@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" validUntil="2022-04-10T13:25:20Z" cacheDuration="PT604800S" entityID="urn:amazon:cognito:sp:us-east-1_FC8kBApuy">
+  <md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>MIICvTCCAaWgAwIBAgIJAI3czPF4NZN9MA0GCSqGSIb3DQEBCwUAMB4xHDAaBgNVBAMME3VzLWVhc3QtMV9hS0lkWlJ4TWIwHhcNMjEwMzI1MDAxNjEwWhcNMzEwMzI2MDAxNjEwWjAeMRwwGgYDVQQDDBN1cy1lYXN0LTFfYUtJZFpSeE1iMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvtm1QGDF8taMnDIArLmzaL/t4rgEUZncTAz/vQQtwPSIGk0jzZL2C50lERboNlAE5sdv6HEZd+7+Czj3s2vx3lg5sG61Z6VaSiQwImRmBae/4QJhh4M/1wPuYTgT6RVw0WRjkWMf5eNl/J+C6aBO59sRy/LovdgosFTACCFrColQE4hrfeIN9+MPxMYHe3fdXn2wZKRRbH3u5x00KdsxalZvwI15EL4//K6sj7U0w9KOvFbyIK+MF9FTx7aza60BztQUi0nAsw/YuPqO75Dnd+UQz8E4SDtQVpPc3zOZbBUblItWXKRlNnhmq/ZTf4e1LTbMbOEVkDWXZkC3F8dD3wIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQAKaXAkjWfnmGE3MNm/vGZGwjX0VlIRSAWdnoxhRn0vu036tCxT9hCre8Mj/x22MGc+jdiEUcfnp9V8suLuZcWBuNYiabWX7O7XDHTOsP+XLFsKaNQ2Wm6SIFF9xanRjMm77aHFjvq7vww9MQANtb9thAjqQQ0is0BvjJt3wSv4lPRKDju9fv/jUTzcEa6/ZbvuiDVtMpMIT8nm8+tUwEOnWkJQKBr+VZFaZsMGpnxbvQSpOh5zebaFaOhVxyMxJOsz8WbDGwok5ZO3GP/PxZRQCFLZ4qIemlLLMVcYv9nGgXve7doHaNR1wzPSD/lJ+mjyYTGQE7OWI3dLLIlpgRna</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>MIICvTCCAaWgAwIBAgIJAI3czPF4NZN9MA0GCSqGSIb3DQEBCwUAMB4xHDAaBgNVBAMME3VzLWVhc3QtMV9hS0lkWlJ4TWIwHhcNMjEwMzI1MDAxNjEwWhcNMzEwMzI2MDAxNjEwWjAeMRwwGgYDVQQDDBN1cy1lYXN0LTFfYUtJZFpSeE1iMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvtm1QGDF8taMnDIArLmzaL/t4rgEUZncTAz/vQQtwPSIGk0jzZL2C50lERboNlAE5sdv6HEZd+7+Czj3s2vx3lg5sG61Z6VaSiQwImRmBae/4QJhh4M/1wPuYTgT6RVw0WRjkWMf5eNl/J+C6aBO59sRy/LovdgosFTACCFrColQE4hrfeIN9+MPxMYHe3fdXn2wZKRRbH3u5x00KdsxalZvwI15EL4//K6sj7U0w9KOvFbyIK+MF9FTx7aza60BztQUi0nAsw/YuPqO75Dnd+UQz8E4SDtQVpPc3zOZbBUblItWXKRlNnhmq/ZTf4e1LTbMbOEVkDWXZkC3F8dD3wIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQAKaXAkjWfnmGE3MNm/vGZGwjX0VlIRSAWdnoxhRn0vu036tCxT9hCre8Mj/x22MGc+jdiEUcfnp9V8suLuZcWBuNYiabWX7O7XDHTOsP+XLFsKaNQ2Wm6SIFF9xanRjMm77aHFjvq7vww9MQANtb9thAjqQQ0is0BvjJt3wSv4lPRKDju9fv/jUTzcEa6/ZbvuiDVtMpMIT8nm8+tUwEOnWkJQKBr+VZFaZsMGpnxbvQSpOh5zebaFaOhVxyMxJOsz8WbDGwok5ZO3GP/PxZRQCFLZ4qIemlLLMVcYv9nGgXve7doHaNR1wzPSD/lJ+mjyYTGQE7OWI3dLLIlpgRna</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://auth.docunight.com/saml2/idpresponse" index="1"/>
+  </md:SPSSODescriptor>
+</md:EntityDescriptor>
