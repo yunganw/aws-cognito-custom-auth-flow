@@ -62,6 +62,7 @@ export default {
                         })
                         .catch(function (error) { 
                             console.log(error);
+                            alert (error.message);
                         });
                 } else {
                     console.log(user);
