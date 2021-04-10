@@ -68,7 +68,10 @@ export default {
                     console.log(user);
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err);
+                alert (error.message);
+            });
         }
     },
 };
