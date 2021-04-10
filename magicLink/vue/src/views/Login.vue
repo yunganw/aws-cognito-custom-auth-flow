@@ -70,7 +70,7 @@ export default {
             })
             .catch(err => {
                 console.log(err);
-                alert (error.message);
+                alert (err.message);
             });
         }
     },
