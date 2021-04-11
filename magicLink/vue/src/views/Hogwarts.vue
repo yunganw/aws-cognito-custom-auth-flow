@@ -37,16 +37,17 @@ export default {
           prewarm: 'yes',        
         })
         .then(response => {
-                  axios
-                    .post('https://api.yungangwu.myinstance.com/magicresponse/',{
+            console.log (response.data.body);
+            axios
+                .post('https://api.yungangwu.myinstance.com/magicresponse/',{
                     prewarm: 'no',        
                     username: this.$route.query.username,        
                     magicstring: this.$route.query.answer,
-                    })
-                    .then(response => (this.info=''+response.data.body))
-                    .catch(function (error) { 
-                    console.log(error);
-                    });          
+                })
+                .then(response => (this.info=''+response.data.body))
+                .catch(function (error) { 
+                console.log(error);
+            });          
         })
         .catch(function (error) { 
            console.log(error);
