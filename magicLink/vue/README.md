@@ -56,12 +56,14 @@ https://console.aws.amazon.com/dynamodb/home?region=us-east-1#create-table:
 5. Add lambdas to your userpool's DefineAuthChallenge, CreateAuthChallenge and VerifyAuthChallange lambda triggers in the User Pool AWS Console. 
 
 6. change the aws resource config to include your user pool's. 
-https://github.com/solariswu/aws-cognito-custom-auth-flow/blob/main/magicLink/vue/src/aws-exports.js
+    https://github.com/solariswu/aws-cognito-custom-auth-flow/blob/main/magicLink/vue/src/aws-exports.js
 
 7. change the App code
-https://github.com/solariswu/aws-cognito-custom-auth-flow/blob/main/magicLink/vue/src/views/Hogwarts.vue#L36
-https://github.com/solariswu/aws-cognito-custom-auth-flow/blob/main/magicLink/vue/src/views/Hogwarts.vue#L42
-https://github.com/solariswu/aws-cognito-custom-auth-flow/blob/main/magicLink/vue/src/views/Login.vue#L52
+    https://github.com/solariswu/aws-cognito-custom-auth-flow/blob/main/magicLink/vue/src/views/Hogwarts.vue#L36
+
+    https://github.com/solariswu/aws-cognito-custom-auth-flow/blob/main/magicLink/vue/src/views/Hogwarts.vue#L42
+
+    https://github.com/solariswu/aws-cognito-custom-auth-flow/blob/main/magicLink/vue/src/views/Login.vue#L52
 
 
 ### Project setup
