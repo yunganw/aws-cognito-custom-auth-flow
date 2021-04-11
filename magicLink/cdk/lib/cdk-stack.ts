@@ -9,25 +9,25 @@ const addLambdaTriggersToUserPool = (context:cdk.Construct, userpool:cognito.Use
 
   const createAuthChallengeFn = new lambda.Function(context, 'cdkMagicCreateAuth', {
     runtime: lambda.Runtime.NODEJS_14_X,
-    code: lambda.Code.fromAsset('lambda'),
+    code: lambda.Code.fromAsset('lambda/createchallenge'),
     handler: 'createauthchallenge.handler',
   });
   
   const defineAuthChallengeFn = new lambda.Function(context, 'cdkMagicDefineAuth', {
     runtime: lambda.Runtime.NODEJS_14_X,
-    code: lambda.Code.fromAsset('lambda'),
+    code: lambda.Code.fromAsset('lambda/definechallenge'),
     handler: 'defineauthchallenge.handler',
   });
   
   const verifyAuthChallengeFn = new lambda.Function(context, 'cdkMagicVerifyAuth', {
     runtime: lambda.Runtime.PYTHON_3_8,
-    code: lambda.Code.fromAsset('lambda'),
+    code: lambda.Code.fromAsset('lambda/verifychallenge'),
     handler: 'verifyauthchallenge.lambda_handler',
   });
 
   const preSignUpFn = new lambda.Function(context, 'cdkMagicPreSignup', {
     runtime: lambda.Runtime.NODEJS_14_X,
-    code: lambda.Code.fromAsset('lambda'),
+    code: lambda.Code.fromAsset('lambda/presignup'),
     handler: 'presignuplambda.handler',
   });
 
