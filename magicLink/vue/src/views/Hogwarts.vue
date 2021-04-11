@@ -32,15 +32,25 @@ export default {
         };
     },
     mounted: function() {
-      axios
+      axios 
         .post('https://api.yungangwu.myinstance.com/magicresponse/',{
-          username: this.$route.query.username,        
-          magicstring: this.$route.query.answer,
+          prewarm: 'yes',        
         })
-        .then(response => (this.info=''+response.data.body))
+        .then(response => {
+                  axios
+                    .post('https://api.yungangwu.myinstance.com/magicresponse/',{
+                    prewarm: 'no',        
+                    username: this.$route.query.username,        
+                    magicstring: this.$route.query.answer,
+                    })
+                    .then(response => (this.info=''+response.data.body))
+                    .catch(function (error) { 
+                    console.log(error);
+                    });          
+        })
         .catch(function (error) { 
            console.log(error);
-        });          
+        });  
     },
 };
 </script>
