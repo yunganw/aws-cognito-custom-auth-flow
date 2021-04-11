@@ -16,6 +16,6 @@
       </ds:KeyInfo>
     </md:KeyDescriptor>
     <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat>
-    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://magiclink-yunganw.netlify.com/saml2/idpresponse" index="1"/>
+    <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://magiclink.auth.us-east-1.amazoncognito.com/saml2/idpresponse" index="1"/>
   </md:SPSSODescriptor>
 </md:EntityDescriptor>
