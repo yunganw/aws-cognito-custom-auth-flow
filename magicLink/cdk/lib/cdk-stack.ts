@@ -48,10 +48,11 @@ const addLambdaTriggersToUserPool = (context:cdk.Construct, userpool:cognito.Use
     })],
   });
 
+  preSignUpFn.role?.attachInlinePolicy(basicLambdaPolicy);
+  
   createAuthChallengeFn.role?.attachInlinePolicy(basicLambdaPolicy);
   defineAuthChallengeFn.role?.attachInlinePolicy(basicLambdaPolicy);
   verifyAuthChallengeFn.role?.attachInlinePolicy(basicLambdaPolicy);
-  preSignUpFn.role?.attachInlinePolicy(basicLambdaPolicy);
 
 }
 
