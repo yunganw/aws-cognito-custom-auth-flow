@@ -1,7 +1,7 @@
 <template>
     <div class="container">
          <div class="modal-dialog">
-            <div class="modal-content background-customizable modal-content-mobile">
+            <div class="modal-content background-customizable modal-content-desktop">
                 <div>
                     <div class="banner-customizable">
                         <center>
@@ -13,7 +13,7 @@
                     <h1>Welcome</h1>
                     <span>User: </span>
                     <center>
-                      {{this.info}}
+                      {{getName(this.info)}}
                     </center>
                 </div>
             </div>
@@ -40,7 +40,7 @@ export default {
       params.append('grant_type', 'authorization_code');
       params.append('client_id', '235qakl0if7b3vss5ikehppnmi');
       params.append('code', this.$route.query.code);
-      params.append('redirect_uri', 'https://magiclink-yunganw.netlify.app/social');
+      params.append('redirect_uri', 'http://localhost:8080/social');
 
       const config = {
           headers: {
@@ -50,9 +50,22 @@ export default {
 
       axios.post(url, params, config)
         .then(response => {
-            this.info=JSON.stringify(response.data);
+            //this.info=JSON.stringify(response.data);
+            this.info = response.data;
         })
         .catch(error => console.log(error)); 
+    },
+    methods: {
+        getName(info) {
+            //decode name
+            console.log ('info', info);
+            
+            const tokens = info.id_token.split(".");
+            
+            console.log ('id_token', tokens[1]);
+            
+            return (JSON.stringify(JSON.parse(Buffer.from(tokens[1], 'base64').toString()), null, "\t"));
+        }
     },
 };
 </script>

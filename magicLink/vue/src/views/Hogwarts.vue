@@ -1,7 +1,7 @@
 <template>
     <div class="container">
          <div class="modal-dialog">
-            <div class="modal-content background-customizable modal-content-mobile">
+            <div class="modal-content background-customizable modal-content-desktop">
                 <div>
                     <div class="banner-customizable">
                         <center>
@@ -13,7 +13,7 @@
                     <h1>Welcome</h1>
                     <span>User: </span>
                     <center>
-                      {{this.info}}
+                        {{getName(this.info)}}
                     </center>
                 </div>
             </div>
@@ -44,14 +44,31 @@ export default {
                     username: this.$route.query.username,        
                     magicstring: this.$route.query.answer,
                 })
-                .then(response => (this.info=''+response.data.body))
+                .then(response => (this.info=response.data.body))
                 .catch(function (error) { 
                 console.log(error);
             });          
         })
         .catch(function (error) { 
            console.log(error);
-        });  
+        });
+    },
+    methods: {
+        getName(info) {
+             //decode name
+            console.log ('info', info);
+            
+            if (info != "") {
+                let obj = JSON.parse(info);
+                const tokens = obj.IdToken.split(".");
+                
+                console.log ('id_token', tokens[1]);
+                
+                return (JSON.stringify(JSON.parse(Buffer.from(tokens[1], 'base64').toString()), null, "\t"));
+            }
+            
+            return "";
+        }
     },
 };
 </script>
