@@ -28,6 +28,12 @@ const routes = [
         component: () =>
             import(/* webpackChunkName: "login" */ '../views/Login.vue'),
     },
+    {
+        path: '/social',
+        name: 'Social',
+        component: () =>
+            import(/* webpackChunkName: "login" */ '../views/Social.vue'),
+    },
 ];
 
 const router = new VueRouter({
