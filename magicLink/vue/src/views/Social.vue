@@ -40,7 +40,7 @@ export default {
       params.append('grant_type', 'authorization_code');
       params.append('client_id', '235qakl0if7b3vss5ikehppnmi');
       params.append('code', this.$route.query.code);
-      params.append('redirect_uri', 'http://magiclink-yunganw.netlify.app/social');
+      params.append('redirect_uri', 'https://magiclink-yunganw.netlify.app/social');
 
       const config = {
           headers: {
