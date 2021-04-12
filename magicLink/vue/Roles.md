@@ -30,7 +30,7 @@
         + post-authentication is called when the user 2nd and following sign-in via Federation. If the user's role needs to be adjusted from time to time whenever his attributes in IdP side changes, this lambda need to be used. 
 
         + Example lambda code 
-
+            https://gist.github.com/solariswu/a041e0d5f8a4cd331fbe070a4b0cd733
 
             Lambda execution role permission
 
