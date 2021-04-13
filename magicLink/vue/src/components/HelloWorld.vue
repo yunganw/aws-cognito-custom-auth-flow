@@ -71,16 +71,15 @@
                      <div>
                         <div>
                            <Span class="textDescription-customizable ">Sign in with your username and password</Span>
-                           <form action="" class="cognito-asf" onsubmit="getAdvancedSecurityData(this);">
+                           <form @submit.prevent="login">
                               <label for="signInFormUsername" class="label-customizable">Username</label>
                               <div>
                                  <input id="signInFormUsername" name="username" type="text" class="form-control inputField-customizable"
-                                    placeholder="Username" autocapitalize="none" required>
+                                    placeholder="Username" autocapitalize="none" required v-model="username">
                               </div>
                               <label for="signInFormPassword" class="label-customizable">Password</label>
                               <div><input id="signInFormPassword" name="password" type="password" class="form-control inputField-customizable"
-                                 placeholder="Password"
-                                 required></div>
+                                 placeholder="Password" required v-model="password"></div>
                               <input name="signInSubmitButton" type="Submit" value="Sign in"
                                  class="btn btn-primary submitButton-customizable" aria-label="submit"/>
                               <br/>
@@ -100,10 +99,39 @@
 </template>
 
 <script>
+import { Auth } from 'aws-amplify';
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
+   name: 'HelloWorld',
+   data() {
+      return {
+         username: '',
+         password: '',
+      };
+   },
+   methods: {
+      async login() {
+         Auth.signIn (this.username, this.password)
+         .then (user => {
+            console.log ("user",user);
+            const tokens = user.signInUserSession.idToken.jwtToken.split('.');
+            const tokenObj = JSON.parse(Buffer.from(tokens[1], 'base64').toString());
+            const currentDate = new Date(tokenObj["exp"]*1000);
+         
+            this.$router.push({
+                name: "UserInfo",
+                params: {
+                  username: tokenObj["cognito:username"],
+                  role: tokenObj["cognito:roles"],
+                  group: tokenObj["cognito:groups"],
+                  email: tokenObj["email"],
+                  exp: currentDate.toLocaleString(),
+                  timezone: currentDate.toString().match(/\((.*)\)/).pop(),
+                }
+            });
+         })
+         .catch (err => console.log(err));
+        }
+   }
 }
 </script>
