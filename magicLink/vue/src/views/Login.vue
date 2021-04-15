@@ -22,6 +22,10 @@
                         
                     </form>
                 </div>
+                <div>
+                    <p class="redirect-customizable"><span>Need an account?</span>&nbsp;<a
+                                    href="/register">Sign up</a></p>
+                </div>
             </div>
         </div>
     </div>
@@ -70,7 +74,10 @@ export default {
             })
             .catch(err => {
                 console.log(err);
-                alert (err.message);
+                if (err.code == 'UserNotFoundException') {
+                    alert (err.message + ' - ' + 'Please Sign Up first.');
+                }
+                else alert (err.message);
             });
         }
     },
