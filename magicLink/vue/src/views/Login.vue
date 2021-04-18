@@ -33,7 +33,7 @@
 <script>
 import { Auth } from 'aws-amplify';
 import * as axios from 'axios';
-const MAGICLINKURL = "'https://api.yungangwu.myinstance.com/magiclink/";
+const MAGICLINKURL = "https://api.yungangwu.myinstance.com/magiclink/";
 
 export default {
     name: 'Login',
