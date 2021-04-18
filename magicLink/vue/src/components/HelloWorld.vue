@@ -86,7 +86,7 @@
                      </div>
                   </div>
                </div>
-            <div v-if="status === 'loading'">
+            <div v-else>
                <span> Loading </span>
                <center>
                <b-spinner variant="primary" label="Spinning" />
@@ -100,7 +100,6 @@
 </template>
 <script>
    import { Auth, Hub } from 'aws-amplify';
-
    
    export default {
       name: 'HelloWorld',

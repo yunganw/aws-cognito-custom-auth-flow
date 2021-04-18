@@ -1,5 +1,5 @@
 {
-  "name": "vue-amplify-auth-tutorial",
+  "name": "aws-cognito-vue-magiclink",
   "version": "0.1.0",
   "private": true,
   "scripts": {

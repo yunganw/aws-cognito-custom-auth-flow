@@ -15,7 +15,7 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "https://magiclink-yunganw.netlify.app",
+        "redirectSignIn": "https://magiclink-yunganw.netlify.app/landing/",
         "redirectSignOut": "https://magiclink-yunganw.netlify.app",
         "responseType": "code"
     },
