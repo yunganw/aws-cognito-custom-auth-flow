@@ -19,7 +19,6 @@
                         <button name="confirm" type="submit" class="btn btn-primary submitButton-customizable">Confirm</button>
                         <input type="button" value="Cancel" class="btn btn-info submitButton-customizable" aria-label="Cancel"
                                                                onclick="window.location.href='/'"/>
-                        
                     </form>
                 </div>
                 <div>
@@ -34,6 +33,7 @@
 <script>
 import { Auth } from 'aws-amplify';
 import * as axios from 'axios';
+const MAGICLINKURL = "'https://api.yungangwu.myinstance.com/magiclink/";
 
 export default {
     name: 'Login',
@@ -53,7 +53,7 @@ export default {
             .then(user => {
                 if (user.challengeName === 'CUSTOM_CHALLENGE') {
                     axios
-                        .post('https://api.yungangwu.myinstance.com/magiclink/',{
+                        .post(MAGICLINKURL,{
                                 username: user.username,        
                                 email: this.email,
                                 session: user.Session,

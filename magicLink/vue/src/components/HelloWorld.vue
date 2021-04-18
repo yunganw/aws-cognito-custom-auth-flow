@@ -9,14 +9,16 @@
                   </div>
             </div>
             <div class="modal-body">
-               <div>
+               <div v-if="status === 'show'">
                      <form name="loginWithIdentityProvider" action="" method="post">
                         <div>
                            <span class="idpDescription-customizable">Sign in with your corporate ID</span>
-                           <input type="button" onclick="window.location.href=&#39;https://magiclink.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Azure&amp;redirect_uri=https://magiclink-yunganw.netlify.app/social&amp;response_type=CODE&amp;client_id=235qakl0if7b3vss5ikehppnmi&amp;scope=aws.cognito.signin.user.admin email openid phone profile&#39;"
-                              value="Azure" class="btn btn-info idpButton-customizable" aria-label="Azure">
-                           <input type="button" value="SAML" class="btn btn-info idpButton-customizable" aria-label="SAML"
-                              onclick="window.location.href=&#39;https://magiclink.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=SAMLIDP&amp;redirect_uri=https://magiclink-yunganw.netlify.app/social&amp;response_type=CODE&amp;client_id=235qakl0if7b3vss5ikehppnmi&amp;scope=aws.cognito.signin.user.admin email openid phone profile&#39;"/>
+                           <input type="button" v-on:click="oauthLogin('Azure')"
+                              value="Azure" class="btn btn-info idpButton-customizable" aria-label="Azure"
+                              />
+                           <input type="button" v-on:click="oauthLogin('SAMLIDP')"
+                              value="SAML" class="btn btn-info idpButton-customizable" aria-label="SAML"
+                             /> 
                         </div>
                      </form>
                   <div>
@@ -26,7 +28,8 @@
                   </div>
                   <div>
                            <span class="idpDescription-customizable">Sign In with your social account</span>
-                           <button name="googleSignUpButton" onclick="window.location.href=&#39;https://magiclink.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Google&amp;redirect_uri=https://magiclink-yunganw.netlify.app/social&amp;response_type=CODE&amp;client_id=235qakl0if7b3vss5ikehppnmi&amp;scope=aws.cognito.signin.user.admin email openid phone profile&#39;" class="btn google-button socialButton-customizable">
+                           <button name="googleSignUpButton" v-on:click="oauthLogin('Google')"
+                              class="btn google-button socialButton-customizable">
                               <span>
                                  <svg class="social-logo" viewBox="0 0 256 262" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid">
                                     <path d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" fill="#4285F4"></path>
@@ -37,8 +40,7 @@
                               </span>
                               <span>Continue with Google</span>
                            </button>
-                           <button name="facebookSignUpButton"
-                              onclick="window.location.href=&#39;https://magiclink.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Facebook&amp;redirect_uri=https://magiclink-yunganw.netlify.app/social&amp;response_type=CODE&amp;client_id=235qakl0if7b3vss5ikehppnmi&amp;scope=aws.cognito.signin.user.admin openid phone email&#39;"
+                           <button name="facebookSignUpButton" v-on:click="oauthLogin('Facebook')"
                               class="btn facebook-button socialButton-customizable">
                               <span>
                                  <svg class="social-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 216 216" color="#ffffff">
@@ -84,45 +86,82 @@
                      </div>
                   </div>
                </div>
+            <div v-if="status === 'loading'">
+               <span> Loading </span>
+               <center>
+               <b-spinner variant="primary" label="Spinning" />
+               </center>
+
+            </div>
             </div>
          </div>
       </div>
    </div>
 </template>
 <script>
-   import { Auth } from 'aws-amplify';
+   import { Auth, Hub } from 'aws-amplify';
+
    
    export default {
       name: 'HelloWorld',
       data() {
          return {
+            status: 'show',
             username: '',
             password: '',
          };
       },
-      methods: {
-         async login() {
-            Auth.signIn (this.username, this.password)
-            .then (user => {
-               console.log ("user",user);
-               const tokens = user.signInUserSession.idToken.jwtToken.split('.');
+      mounted: function () {
+            Hub.listen('auth', ({ payload: { event, data } }) => {
+               switch (event) {
+                  case 'cognitoHostedUI':
+                     Auth.currentAuthenticatedUser().then(userData => {
+                        console.log ("user",userData);
+                        this.transitUserInfo(userData);
+                     });
+                     break;
+                  case 'signOut':
+                     // setUser(null);
+                     break;
+                  case 'signIn_failure':
+                  case 'cognitoHostedUI_failure':
+                     console.log('Sign in failure', data);
+                     break;
+               }
+            });
+         },
+         methods: {
+            transitUserInfo (userData) {
+               const tokens = userData.signInUserSession.idToken.jwtToken.split('.');
                const tokenObj = JSON.parse(Buffer.from(tokens[1], 'base64').toString());
                const currentDate = new Date(tokenObj["exp"]*1000);
-            
+               
                this.$router.push({
-                   name: "UserInfo",
-                   params: {
+                  name: "UserInfo",
+                  params: {
                      username: tokenObj["cognito:username"],
                      role: tokenObj["cognito:roles"],
                      group: tokenObj["cognito:groups"],
                      email: tokenObj["email"],
                      exp: currentDate.toLocaleString(),
                      timezone: currentDate.toString().match(/\((.*)\)/).pop(),
-                   }
+                  }
                });
-            })
-            .catch (err => console.log(err));
-           }
+            },
+
+            async oauthLogin (providerName) {
+               this.status = "loading";
+               Auth.federatedSignIn({provider: providerName});
+            },
+            async login() {
+               this.status = "loading";
+               Auth.signIn (this.username, this.password)
+               .then (userData => {
+                  console.log ("user",userData);
+                  this.transitUserInfo (userData);
+               })
+               .catch (err => console.log(err));
+            }
       }
    }
 </script>

@@ -11,10 +11,7 @@
                 </div>
                 <div class="modal-body">
                     <h1>Welcome</h1>
-                    <span>User: </span>
-                    <center>
-                        {{getName(this.info)}}
-                    </center>
+                    <span>{{this.info}}</span>
                 </div>
             </div>
         </div>
@@ -23,6 +20,7 @@
 
 <script>
 import * as axios from 'axios';
+const MAGICRESPONSEURL = "https://api.yungangwu.myinstance.com/magicresponse/"; 
 
 export default {
     name: 'Hogwarts',
@@ -33,42 +31,47 @@ export default {
     },
     mounted: function() {
       axios 
-        .post('https://api.yungangwu.myinstance.com/magicresponse/',{
+        .post(MAGICRESPONSEURL,{
           prewarm: 'yes',        
         })
         .then(response => {
             console.log (response.data.body);
             axios
-                .post('https://api.yungangwu.myinstance.com/magicresponse/',{
+                .post(MAGICRESPONSEURL,{
                     prewarm: 'no',        
                     username: this.$route.query.username,        
                     magicstring: this.$route.query.answer,
                 })
-                .then(response => (this.info=response.data.body))
+                .then(response => {
+                    let obj = JSON.parse(response.data.body);
+
+                    const tokens = obj.IdToken.split('.');
+                    const tokenObj = JSON.parse(Buffer.from(tokens[1], 'base64').toString());
+                    const currentDate = new Date(tokenObj["exp"]*1000);
+                    
+                    this.$router.push({
+                        name: "UserInfo",
+                        params: {
+                            username: tokenObj["cognito:username"],
+                            role: tokenObj["cognito:roles"],
+                            group: tokenObj["cognito:groups"],
+                            email: tokenObj["email"],
+                            exp: currentDate.toLocaleString(),
+                            timezone: currentDate.toString().match(/\((.*)\)/).pop(),
+                        }
+                    });
+                
+
+                })
                 .catch(function (error) { 
-                console.log(error);
+                    this.info = error;
+                    console.log(error);
             });          
         })
         .catch(function (error) { 
-           console.log(error);
+            this.info = error
+            console.log(error);
         });
-    },
-    methods: {
-        getName(info) {
-             //decode name
-            console.log ('info', info);
-            
-            if (info != "") {
-                let obj = JSON.parse(info);
-                const tokens = obj.IdToken.split(".");
-                
-                console.log ('id_token', tokens[1]);
-                
-                return (JSON.stringify(JSON.parse(Buffer.from(tokens[1], 'base64').toString()), null, "\t"));
-            }
-            
-            return "";
-        }
     },
 };
 </script>
