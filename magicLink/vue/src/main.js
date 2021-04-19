@@ -6,10 +6,10 @@ import awsconfig from './aws-exports';
 import { BootstrapVue } from 'bootstrap-vue'
 
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-import './assets/styles/cognito-login.css';
+// import './assets/styles/cognito-login.css';
 
 
 Vue.use(BootstrapVue)

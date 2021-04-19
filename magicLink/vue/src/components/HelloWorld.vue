@@ -98,6 +98,10 @@
       </div>
    </div>
 </template>
+<style scoped>
+@import '../assets/styles/bootstrap.css';
+@import '../assets/styles/cognito-login.css';
+</style>
 <script>
    import { Auth, Hub } from 'aws-amplify';
    
