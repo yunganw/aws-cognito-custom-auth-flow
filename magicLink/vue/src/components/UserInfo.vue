@@ -6,7 +6,7 @@
       <div class="user-profile">
         <div class="user-background"></div>
         <div v-if="this.email ? 1===1: 1===0" class="user-image">
-          <img src="https://gravatar.com/avatar/acd0be988874771459704b56b9422cbe">
+          <img v-bind:src="'https://gravatar.com/avatar/' + this.gravatar">
         </div>
         <div v-else class="user-image">
           <img src="https://gravatar.com/avatar/000000">
@@ -34,7 +34,7 @@
         <a href="#"><i class="icon ion-logo-instagram"></i></a>
       </div>
     </div>
-    <div class="toggle-button"><i class="icon ion-md-arrow-dropleft"></i></div>
+    <div class="toggle-button" v-on:click="toogle()"><i class="icon ion-md-arrow-dropleft"></i></div>
   </div>
   <div class="main-content">
     
@@ -108,8 +108,10 @@
 <style scoped lang="scss">
   @import "../assets/styles/userinfo.scss";
 </style>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
+import * as CryptoJS from 'crypto-js';
+
 export default {
    name: 'UserInfo',
    data() {
@@ -120,6 +122,7 @@ export default {
            group: '',
            exp: '',
            timezone: '',
+           gravatar: '',
        };
    },
    mounted: function () {
@@ -129,12 +132,20 @@ export default {
        this.group = this.$route.params.group;
        this.exp = this.$route.params.exp;
        this.timezone = this.$route.params.timezone;
+       this.gravatar = CryptoJS.MD5((this.email? this.email: "").trim().toLowerCase()).toString();
        console.log ('UserInfo:', this.username, this.role, this.email);
 
-       document.querySelector('body').setAttribute('style', 'background-color:#0a1022')
+       document.querySelector('body').setAttribute('style', 'background-color:#0a1022');
+       document.querySelector('.user-background').setAttribute('style', 
+        'background: url("https://gravatar.com/avatar/'+ this.gravatar +'")');
     },
     beforeDestroy() {
         document.querySelector('body').removeAttribute('style')
+    },
+    methods: {
+      toogle () {
+        document.querySelector('.left-sidebar').classList.toggle('minimize');
+      }
     }
 }
 </script>
