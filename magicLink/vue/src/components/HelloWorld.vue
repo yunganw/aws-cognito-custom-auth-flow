@@ -87,11 +87,12 @@
                   </div>
                </div>
             <div v-else>
-               <span> Loading </span>
                <center>
-               <b-spinner variant="primary" label="Spinning" />
+                        <b-spinner variant="primary" label="Spinning" /><p></p>
+                        <span> Loading
+                           <b-icon icon="three-dots" animation="cylon"></b-icon>
+                        </span>
                </center>
-
             </div>
             </div>
          </div>

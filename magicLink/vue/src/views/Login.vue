@@ -5,7 +5,6 @@
                 <div>
                     <div class="banner-customizable">
                         <center>
-                            
                         </center>
                     </div>
                 </div>
@@ -33,7 +32,8 @@
 <script>
 import { Auth } from 'aws-amplify';
 import * as axios from 'axios';
-const MAGICLINKURL = "https://api.yungangwu.myinstance.com/magiclink/";
+import awsconfig from '../aws-exports';
+const MAGICLINKURL = awsconfig.magiclink_url;
 
 export default {
     name: 'Login',

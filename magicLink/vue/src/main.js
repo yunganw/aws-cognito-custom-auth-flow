@@ -3,17 +3,10 @@ import App from './App.vue'
 import router from './router'
 import Amplify from 'aws-amplify'
 import awsconfig from './aws-exports';
-import { BootstrapVue } from 'bootstrap-vue'
-
-
-// import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap-vue/dist/bootstrap-vue.css'
-
-// import './assets/styles/cognito-login.css';
-
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 
 Vue.use(BootstrapVue)
-
+Vue.use(BootstrapVueIcons)
 
 Amplify.configure(awsconfig);
 

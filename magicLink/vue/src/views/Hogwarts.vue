@@ -10,8 +10,14 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <h1>Welcome</h1>
-                    <span>{{this.info}}</span>
+                    <div>
+                        <center>
+                            <b-spinner variant="primary" label="Spinning" /><p></p>
+                            <span > Loading
+                            <b-icon icon="three-dots" animation="cylon"></b-icon>
+                            </span>
+                        </center>
+                    </div>
                 </div>
             </div>
         </div>
@@ -20,7 +26,8 @@
 
 <script>
 import * as axios from 'axios';
-const MAGICRESPONSEURL = "https://api.yungangwu.myinstance.com/magicresponse/"; 
+import awsconfig from '../aws-exports';
+const MAGICRESPONSEURL = awsconfig.magicresponse_url; 
 
 export default {
     name: 'Hogwarts',
