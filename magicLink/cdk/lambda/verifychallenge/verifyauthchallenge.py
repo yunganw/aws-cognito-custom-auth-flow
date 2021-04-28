@@ -9,7 +9,7 @@ def lambda_handler(event, context):
     print(event)
     
     dynamodb = boto3.resource('dynamodb',region_name=AWS_REGION)
-    table = dynamodb.Table('CdkStack-magiclinkTableE01A1656-51952RVXND2N')
+    table = dynamodb.Table('magiclink')
     item = ''
 
     useremail = event['request']['userAttributes']['email'];

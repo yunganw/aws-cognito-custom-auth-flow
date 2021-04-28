@@ -5,7 +5,6 @@
                 <div>
                     <div class="banner-customizable">
                         <center>
-                            
                         </center>
                     </div>
                 </div>
@@ -19,8 +18,11 @@
                         <button name="confirm" type="submit" class="btn btn-primary submitButton-customizable">Confirm</button>
                         <input type="button" value="Cancel" class="btn btn-info submitButton-customizable" aria-label="Cancel"
                                                                onclick="window.location.href='/'"/>
-                        
                     </form>
+                </div>
+                <div>
+                    <p class="redirect-customizable"><span>Need an account?</span>&nbsp;<a
+                                    href="/register">Sign up</a></p>
                 </div>
             </div>
         </div>
@@ -30,6 +32,8 @@
 <script>
 import { Auth } from 'aws-amplify';
 import * as axios from 'axios';
+import awsconfig from '../aws-exports';
+const MAGICLINKURL = awsconfig.magiclink_url;
 
 export default {
     name: 'Login',
@@ -49,7 +53,7 @@ export default {
             .then(user => {
                 if (user.challengeName === 'CUSTOM_CHALLENGE') {
                     axios
-                        .post('https://api.yungangwu.myinstance.com/magiclink/',{
+                        .post(MAGICLINKURL,{
                                 username: user.username,        
                                 email: this.email,
                                 session: user.Session,
@@ -70,7 +74,10 @@ export default {
             })
             .catch(err => {
                 console.log(err);
-                alert (err.message);
+                if (err.code == 'UserNotFoundException') {
+                    alert (err.message + ' - ' + 'Please Sign Up first.');
+                }
+                else alert (err.message);
             });
         }
     },

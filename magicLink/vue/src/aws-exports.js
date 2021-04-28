@@ -3,10 +3,28 @@
 
 const awsmobile = {
     "aws_project_region": "us-east-1",
-    "aws_cognito_region": "us-east-1",
+    // "aws_cognito_region": "us-east-1",
     "aws_user_pools_id": "us-east-1_FC8kBApuy",
-    "aws_user_pools_web_client_id": "235qakl0if7b3vss5ikehppnmi"
+    "aws_user_pools_web_client_id": "235qakl0if7b3vss5ikehppnmi",
+    "oauth": {
+        "domain": "magiclink.auth.us-east-1.amazoncognito.com",
+        "scope": [
+            "phone",
+            "email",
+            "openid",
+            "profile",
+            "aws.cognito.signin.user.admin"
+        ],
+        "redirectSignIn":  "http://localhost:8080/landing/",
+        "redirectSignOut": "http://localhost:8080/",
+        "responseType": "code"
+    },
+    "federationTarget": "COGNITO_USER_POOLS",
+
+    "magiclink_url": "https://api.yungangwu.myinstance.com/magiclink/",
+    "magicresponse_url": "https://api.yungangwu.myinstance.com/magicresponse/" 
 };
+
 
 
 export default awsmobile;
