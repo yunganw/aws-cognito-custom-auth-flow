@@ -31,9 +31,6 @@
 
 <script>
 import { Auth } from 'aws-amplify';
-import * as axios from 'axios';
-import awsconfig from '../aws-exports';
-const MAGICLINKURL = awsconfig.magiclink_url;
 
 export default {
     name: 'Login',
@@ -52,22 +49,15 @@ export default {
             Auth.signIn(this.email)
             .then(user => {
                 if (user.challengeName === 'CUSTOM_CHALLENGE') {
-                    axios
-                        .post(MAGICLINKURL,{
-                                username: user.username,        
-                                email: this.email,
-                                session: user.Session,
-                            })
-                        .then(response => {
-                            this.info = response;
-                            console.log ("email link sent");
-                            this.email = "";
-                            alert ("Email Sent!");
+                    localStorage.setItem(
+                        'cognitoUser',
+                        JSON.stringify({
+                            username: this.email,
+                            session: user.Session,
                         })
-                        .catch(function (error) { 
-                            console.log(error);
-                            alert (error.message);
-                        });
+                    )
+                    alert ("Email Sent!");
+                    this.email = '';
                 } else {
                     console.log(user);
                 }

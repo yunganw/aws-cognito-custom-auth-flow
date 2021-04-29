@@ -27,7 +27,7 @@
                </div>
                <div class="main-menu">
                   <div v-show="this.email? 1===1:1===0" class="text-center">
-                     <b-button variant="outline-dark" class="text-light" v-on:click="logout()">
+                     <b-button size="sm" variant="outline-dark" class="text-light" v-on:click="logout()">
                         <b-icon icon="power" aria-hidden="true"></b-icon>
                         Logout
                      </b-button>
@@ -70,25 +70,38 @@
           };
       },
       mounted: function () {
-          this.username = this.$route.params.username;
-          this.role = this.$route.params.role;
-          this.email = this.$route.params.email;
-          this.group = this.$route.params.group;
-          this.exp = this.$route.params.exp;
-          this.timezone = this.$route.params.timezone;
-          this.gravatar = CryptoJS.MD5((this.email? this.email: "").trim().toLowerCase()).toString();
-          console.log ('UserInfo:', this.username, this.role, this.email);
-   
-          document.querySelector('body').setAttribute('style', 'background-color:#0a1022');
-          document.querySelector('.user-background').setAttribute('style', 
+         try {
+            Auth.currentSession()
+            .then (data => this.transformUserInfo (data.getIdToken().getJwtToken()))
+            .catch (err => console.log (err))
+         }
+         catch {
+            console.log ("no user valid session");
+         }
+  
+         document.querySelector('body').setAttribute('style', 'background-color:#0a1022');
+         document.querySelector('.user-background').setAttribute('style', 
            'background: url("https://gravatar.com/avatar/'+ this.gravatar +'")');
-       },
-       beforeDestroy() {
-           document.querySelector('body').removeAttribute('style')
-       },
-       methods: {
+      },
+      beforeDestroy() {
+         document.querySelector('body').removeAttribute('style')
+      },
+      methods: {
          toogle () {
            document.querySelector('.left-sidebar').classList.toggle('minimize');
+         },
+         transformUserInfo (idtoken) {
+            const tokens = idtoken.split('.');
+            const tokenObj = JSON.parse(Buffer.from(tokens[1], 'base64').toString());
+            const currentDate = new Date(tokenObj["exp"]*1000);
+            
+            this.username = tokenObj["cognito:username"],
+            this.role = tokenObj["cognito:roles"],
+            this.group = tokenObj["cognito:groups"],
+            this.email = tokenObj["email"],
+            this.exp = currentDate.toLocaleString(),
+            this.timezone = currentDate.toString().match(/\((.*)\)/).pop(),
+            this.gravatar = CryptoJS.MD5((this.email? this.email: "").trim().toLowerCase()).toString();
          },
          async logout () {
            Auth.signOut({ global: true })
@@ -98,6 +111,8 @@
              .catch (err => console.log(err));;
    
            Auth.signOut ();
+
+           this.$parent.$forceUpdate();
          }
        }
    }

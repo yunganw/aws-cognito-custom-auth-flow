@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import UserInfo from '../components/UserInfo.vue';
-import Landing from '../views/Landing.vue';
 
 Vue.use(VueRouter);
 
@@ -25,20 +23,10 @@ const routes = [
             import(/* webpackChunkName: "register" */ '../views/Register.vue'),
     },
     {
-        path: '/login',
-        name: 'Login',
+        path: '/maillogin',
+        name: 'MailLogin',
         component: () =>
-            import(/* webpackChunkName: "login" */ '../views/Login.vue'),
-    },
-    {
-        path: '/landing',
-        name: 'Landing',
-        component: Landing, 
-    },
-    {
-        path: '/userinfo',
-        name: 'UserInfo',
-        component: UserInfo, 
+            import(/* webpackChunkName: "login" */ '../views/MailLogin.vue'),
     },
 ];
 

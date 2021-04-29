@@ -24,7 +24,7 @@
                   <div>
                      <span class="idpDescription-customizable">Sign In with a Magic Link</span>
                      <input type="button" value="Email Login" class="btn btn-info idpButton-customizable" aria-label="Email-login"
-                        onclick="window.location.href='/login'"/>
+                        onclick="window.location.href='/maillogin'"/>
                   </div>
                   <div>
                            <span class="idpDescription-customizable">Sign In with your social account</span>
@@ -107,7 +107,7 @@
    import { Auth, Hub } from 'aws-amplify';
    
    export default {
-      name: 'HelloWorld',
+      name: 'Login',
       data() {
          return {
             status: 'show',
@@ -121,7 +121,6 @@
                   case 'cognitoHostedUI':
                      Auth.currentAuthenticatedUser().then(userData => {
                         console.log ("user",userData);
-                        this.transitUserInfo(userData);
                      });
                      break;
                   case 'signOut':
@@ -135,24 +134,6 @@
             });
          },
          methods: {
-            transitUserInfo (userData) {
-               const tokens = userData.signInUserSession.idToken.jwtToken.split('.');
-               const tokenObj = JSON.parse(Buffer.from(tokens[1], 'base64').toString());
-               const currentDate = new Date(tokenObj["exp"]*1000);
-               
-               this.$router.push({
-                  name: "UserInfo",
-                  params: {
-                     username: tokenObj["cognito:username"],
-                     role: tokenObj["cognito:roles"],
-                     group: tokenObj["cognito:groups"],
-                     email: tokenObj["email"],
-                     exp: currentDate.toLocaleString(),
-                     timezone: currentDate.toString().match(/\((.*)\)/).pop(),
-                  }
-               });
-            },
-
             async oauthLogin (providerName) {
                this.status = "loading";
                Auth.federatedSignIn({provider: providerName});
@@ -162,7 +143,6 @@
                Auth.signIn (this.username, this.password)
                .then (userData => {
                   console.log ("user",userData);
-                  this.transitUserInfo (userData);
                })
                .catch (err => console.log(err));
             }
