@@ -7,25 +7,25 @@ import * as dynamodb from '@aws-cdk/aws-dynamodb';
 
 const addLambdaTriggersToUserPool = (context:cdk.Construct, userpool:cognito.UserPool) => {
 
-  const createAuthChallengeFn = new lambda.Function(context, 'cdkMagicCreateAuth', {
-    runtime: lambda.Runtime.NODEJS_14_X,
+  const createAuthChallengeFn = new lambda.Function(context, 'magicLinkSameBrowserCreateAuth', {
+    runtime: lambda.Runtime.PYTHON_3_8,
     code: lambda.Code.fromAsset('lambda/createchallenge'),
     handler: 'createauthchallenge.handler',
   });
   
-  const defineAuthChallengeFn = new lambda.Function(context, 'cdkMagicDefineAuth', {
+  const defineAuthChallengeFn = new lambda.Function(context, 'magicLinkSameBrowserDefineAuth', {
     runtime: lambda.Runtime.NODEJS_14_X,
     code: lambda.Code.fromAsset('lambda/definechallenge'),
     handler: 'defineauthchallenge.handler',
   });
   
-  const verifyAuthChallengeFn = new lambda.Function(context, 'cdkMagicVerifyAuth', {
+  const verifyAuthChallengeFn = new lambda.Function(context, 'magicLinkSameBrowserVerifyAuth', {
     runtime: lambda.Runtime.PYTHON_3_8,
     code: lambda.Code.fromAsset('lambda/verifychallenge'),
     handler: 'verifyauthchallenge.lambda_handler',
   });
 
-  const preSignUpFn = new lambda.Function(context, 'cdkMagicPreSignup', {
+  const preSignUpFn = new lambda.Function(context, 'autoConfirmPreSignup', {
     runtime: lambda.Runtime.NODEJS_14_X,
     code: lambda.Code.fromAsset('lambda/presignup'),
     handler: 'presignuplambda.handler',
@@ -41,9 +41,9 @@ const addLambdaTriggersToUserPool = (context:cdk.Construct, userpool:cognito.Use
   userpool.addTrigger(cognito.UserPoolOperation.PRE_SIGN_UP,
     preSignUpFn);
 
-  const basicLambdaPolicy = new iam.Policy(context, 'customauthmagicfn-policy', {
+  const basicLambdaPolicy = new iam.Policy(context, 'magicsamebrowserlambdafn-policy', {
     statements: [new iam.PolicyStatement({
-      actions: ['dynamodb:GetItem','logs:DescribeUserPool', 'logs:CreateLogStream', 'logs:PutLogEvents'],
+      actions: ['logs:DescribeUserPool', 'logs:CreateLogStream', 'logs:PutLogEvents'],
       resources: ['*'],
     })],
   });
@@ -75,8 +75,8 @@ export class CdkStack extends cdk.Stack {
 
     
     // The code that defines your stack goes here
-    const userpool = new cognito.UserPool(this, 'myuserpool', {
-      userPoolName: 'magicLink',
+    const userpool = new cognito.UserPool(this, 'userpool', {
+      userPoolName: 'magicLinkSameBrowser',
       // use self sign-in is disable by default
       selfSignUpEnabled: true,
       // other option would be { email: true, phone: false }
@@ -103,11 +103,6 @@ export class CdkStack extends cdk.Stack {
 
     addLambdaTriggersToUserPool (this, userpool);
     addNoSecretAppClient (this, userpool);
-
-    const magiclinkTable = new dynamodb.Table(this, 'magiclinkTable', {
-      partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING }
-    });
-
 
   }
 }
