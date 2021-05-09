@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import UserInfo from '../components/UserInfo.vue';
 import Landing from '../views/Landing.vue';
+import ForgotPassword from '../views/ForgotPassword.vue';
 
 Vue.use(VueRouter);
 
@@ -39,6 +40,11 @@ const routes = [
         path: '/userinfo',
         name: 'UserInfo',
         component: UserInfo, 
+    },
+    {
+        path: '/forgotpassword',
+        name: 'ForgotPassword',
+        component: ForgotPassword,
     },
 ];
 

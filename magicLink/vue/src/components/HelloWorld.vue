@@ -74,6 +74,7 @@
                               <label for="signInFormPassword" class="label-customizable">Password</label>
                               <div><input id="signInFormPassword" name="password" type="password" class="form-control inputField-customizable"
                                  placeholder="Password" required v-model="password"></div>
+                              <a class="redirect-customizable" href="/forgotpassword">Forgot your password?</a>
                               <input name="signInSubmitButton" type="Submit" value="Sign in"
                                  class="btn btn-primary submitButton-customizable" aria-label="submit"/>
                               <br/>
