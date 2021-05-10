@@ -31,11 +31,6 @@ const MAGICRESPONSEURL = awsconfig.magicresponse_url;
 
 export default {
     name: 'Hogwarts',
-    data() {
-        return {
-            info: '',
-        };
-    },
     mounted: function() {
       axios 
         .post(MAGICRESPONSEURL,{
@@ -76,7 +71,7 @@ export default {
             });          
         })
         .catch(function (error) { 
-            this.info = error
+            alert(error.message);
             console.log(error);
         });
     },
