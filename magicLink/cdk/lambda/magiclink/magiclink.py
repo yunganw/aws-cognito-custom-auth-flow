@@ -10,7 +10,8 @@ from botocore.exceptions import ClientError
 AWS_REGION = "us-east-1"
 SUBJECT = "Magic link from Hogwarts"
 CHARSET = "UTF-8"
-SENDER = "Hogwarts <solariswu@test.com>"
+SENDER = "Hogwarts <solariswu@hotmail.com>"
+WEB_URL = "https://magiclink-yunganw.netlify.app/hogwarts?"
 
 
 def lambda_handler(event, context):
@@ -25,7 +26,7 @@ def lambda_handler(event, context):
     
     dynamodb = boto3.resource('dynamodb',region_name=AWS_REGION)
 
-    table = dynamodb.Table('magiclink')
+    table = dynamodb.Table('CdkStack-magiclinkTableE01A1656-51952RVXND2N')
     
     try:
         response = table.put_item(
@@ -52,23 +53,23 @@ def lambda_handler(event, context):
 
     
     # The email body for recipients with non-HTML email clients.
-    BODY_TEXT = ("Hello, here is your magic ticket for entering Hogwarts.\r\n"
-             "https://magiclink-yunganw.netlify.app/hogwarts?"
-            )
+    BODY_TEXT = "Hello, here is your magic link for entering Hogwarts.\r\n"+WEB_URL
     queryParam = "username=" + event['username'] + "&answer=" + magicstring
-
     BODY_TEXT = BODY_TEXT + queryParam
             
     # The HTML body of the email.
     BODY_HTML = """<html>
     <head></head>
-    <body>
-    <h1>Magic ticket to enter Hogwarts</h1>
-    <p><a href='https://magiclink-yunganw.netlify.app/hogwarts?"""
-    
-    BODY_HTML = BODY_HTML + queryParam
-    
-    BODY_HTML = BODY_HTML + """'>Click Here</a>.</p>
+    <body style="background: #fff1e2; padding:20px;">
+    <h2>Login with Magic Link</h2>
+    <p>You have requested to login to Accounts using your email address. 
+        If you do not recognise this request please ignore this email.</p>
+        
+    <p>This magic link WILL EXPIRE in a few minutes and can be used ONLY ONCE. Please request a new magic link whenever needed.</p>
+    <p>
+    <a style="display: block; width: 180px; height: 24px; background: #28a745; padding:5px; text-align: center; border-radius: 5px; color: rgb(255,255,255); font-weight: bold; line-height: 25px;" href='"""
+    BODY_HTML = BODY_HTML + WEB_URL + queryParam
+    BODY_HTML = BODY_HTML + """'><font color="FFFFFF">Go to Accounts</font></a></p>
     </body>
     </html>
     """  
@@ -115,7 +116,3 @@ def lambda_handler(event, context):
         'statusCode': RESCODE,
         'body': RESBODY
     }
-
-
-
-
