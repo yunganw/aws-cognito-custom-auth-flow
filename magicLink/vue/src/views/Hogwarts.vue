@@ -71,7 +71,7 @@ export default {
 
                 })
                 .catch(function (error) { 
-                    this.info = error;
+                    alert(error.message);
                     console.log(error);
             });          
         })
