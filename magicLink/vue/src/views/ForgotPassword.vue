@@ -28,9 +28,16 @@
                 aria-label="username"
                 v-model="username"
               />
-              <br/>
-              <b-button variant="success" type="submit" form="forgotpasswordform" value="Submit" > Submit </b-button>
-              <a class="redirect-customizable" href="/" style="font-size: 14px">
+              <br />
+              <b-button
+                variant="success"
+                type="submit"
+                form="forgotpasswordform"
+                value="Submit"
+              >
+                Submit
+              </b-button>
+              <a class="redirect-customizable" href="/">
                 Return to login</a
               >
             </form>
@@ -41,28 +48,6 @@
                 name="confirmforgotpasswordform"
                 @submit.prevent="changepassword"
               >
-                <input
-                  type="hidden"
-                  class="form-control inputField-customizable"
-                  id="username"
-                  name="username"
-                  value="nomfa"
-                />
-                <input
-                  type="hidden"
-                  class="form-control inputField-customizable"
-                  id="destination"
-                  name="destination"
-                  value="s***@g***.com"
-                />
-                <input
-                  type="hidden"
-                  class="form-control inputField-customizable"
-                  id="deliveryMedium"
-                  name="deliveryMedium"
-                  value="EMAIL"
-                />
-
                 <br />
                 <div id="div-forgot-password-msg">
                   <span id="text-code"
@@ -106,7 +91,7 @@
                   type="submit"
                   class="btn btn-primary submitButton-customizable"
                 >
-                  Change Password
+                  <span>Change Password</span>
                 </button>
               </form>
             </div>
@@ -114,6 +99,10 @@
               <span>
                 The password reset link has been sent to {{ this.email }}
               </span>
+              <p></p>
+              <a class="redirect-customizable" href="/">
+                Return to login</a
+              >
             </div>
           </div>
         </div>

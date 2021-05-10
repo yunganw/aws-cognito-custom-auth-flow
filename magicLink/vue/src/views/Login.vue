@@ -9,10 +9,10 @@
         </div>
         <div class="modal-body">
           <h2>Magic Login</h2>
-          <br/>
+          <br />
           <span
             >Enter your Email address below, <br />
-            we will send you a mgaic link to login.</span
+            we will send you a magic link to login.</span
           >
           <form @submit.prevent="login">
             <br />
@@ -28,17 +28,25 @@
               type="email"
               v-model="email"
             />
-            <br/>
+            <br />
+            <b-button variant="success" v-if="loading">
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Sending...
+            </b-button>
             <b-button
+              v-else
               name="confirm"
               type="submit"
               variant="success"
+              @click="$bvToast.show('example-toast')"
             >
               Confirm
             </b-button>
-              <a class="redirect-customizable" href="/" style="font-size: 14px">
-                Return to login</a
-              >
+            <a class="redirect-customizable" href="/"> Return to login</a>
           </form>
         </div>
         <!-- <div>
@@ -61,10 +69,13 @@ export default {
   data() {
     return {
       email: "",
+      loading: false,
+      timer: "",
     };
   },
   methods: {
     async login() {
+      this.loading = true;
       Auth.configure({
         authenticationFlowType: "CUSTOM_AUTH",
       });
@@ -82,10 +93,19 @@ export default {
                 this.info = response;
                 console.log("email link sent");
                 this.email = "";
+                this.loading = false;
+
+                this.$bvToast.toast("Email Sent!", {
+                  title: "Info",
+                  toaster: "b-toaster-top-center",
+                  autoHideDelay: 50000,
+                  solid: true,
+                });
                 alert("Email Sent!");
               })
               .catch(function (error) {
                 console.log(error);
+                this.loading = false;
                 alert(error.message);
               });
           } else {
@@ -94,6 +114,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+          this.loading = false;
           if (err.code == "UserNotFoundException") {
             alert(err.message + " - " + "Please Sign Up first.");
           } else alert(err.message);

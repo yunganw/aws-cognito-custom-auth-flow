@@ -34,14 +34,25 @@
                   name="confirmPassword"
                   required=""
                 />
-
-                <button
+                <br />
+                <b-button variant="success" v-if="loading">
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  Changing...
+                </b-button>
+                <b-button
+                  v-else
                   name="reset_password"
                   type="submit"
-                  class="btn btn-success submitButton-customizable"
+                  variant="success"
                 >
                   Change Password
-                </button>
+                </b-button>
+                <p></p>
+                <a class="redirect-customizable" href="/"> Return to login</a>
               </form>
             </div>
           </div>
@@ -62,15 +73,12 @@ export default {
   data() {
     return {
       username: this.$route.query.username,
+      code: this.$route.query.code,
       newpassword: "",
       newpwddup: "",
-      code: this.$route.query.code,
+      loading: false,
     };
   },
-  //   mounted: function () {
-  //       this.code = this.$route.query.code;
-  //       this.username = this.$route.query.username;
-  //   },
   methods: {
     changepassword() {
       if (this.code.length < 6) {
@@ -80,12 +88,17 @@ export default {
       } else if (this.newpassword !== this.newpwddup) {
         alert("password not match!");
       } else {
+        this.loading = true;
         Auth.forgotPasswordSubmit(this.username, this.code, this.newpassword)
           .then(() => {
             alert("New password applied, please sign-in");
+            this.loading = false;
             this.$router.push("/");
           })
-          .catch((err) => alert(err));
+          .catch((err) => {
+            alert(err.message);
+            this.loading = false;
+          });
       }
     },
   },
