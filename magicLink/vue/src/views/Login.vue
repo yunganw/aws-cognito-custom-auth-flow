@@ -94,13 +94,7 @@ export default {
                 console.log("email link sent");
                 this.email = "";
                 this.loading = false;
-
-                this.$bvToast.toast("Email Sent!", {
-                  title: "Info",
-                  toaster: "b-toaster-top-center",
-                  autoHideDelay: 50000,
-                  solid: true,
-                });
+ 
                 alert("Email Sent!");
               })
               .catch(function (error) {
