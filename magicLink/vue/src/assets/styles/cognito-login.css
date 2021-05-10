@@ -1,7 +1,7 @@
 body {
     font-family: "Arial";
     color: #3B3B3B;
-    background: #909090;
+    background: #fff1e2;
 }
 
 @media (min-width: 768px) {
@@ -107,7 +107,7 @@ body {
 }
 
 .banner-customizable {
-    padding: 25px 0px 25px 0px;
+    padding: 2px 0px 2px 0px;
     background-color: lightgray;
 }
 
@@ -141,14 +141,12 @@ body {
     height: 40px;
     width: 100%;
     color: #fff;
-    background-color: #337ab7;
-    border-color: #2e6da4
 }
 
 .submitButton-customizable:hover {
     color: #fff;
-    background-color: #286090;
-    border-color: #204d74
+    /* background-color: #286090;
+    border-color: #204d74 */
 }
 
 .errorMessage-customizable {
@@ -173,14 +171,28 @@ body {
     outline: 0;
 }
 
+.magiclink-btn {
+    color: #3B3B3B ;
+    height: 40px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+    background-color: #bddf91;
+    border-color: transparent;
+    width: 100%;
+}
+.magiclink-btn:hover {
+    background-color: #93ad72;
+}
+
 .idpButton-customizable {
     height: 40px;
     width: 100%;
     text-align: center;
     margin-bottom: 15px;
     color: #fff;
-    background-color: #5bc0de;
-    border-color: #46b8da;
+    background-color: #bddf91;
+    border-color: transparent;
     width: 100%;
 }
 
@@ -223,17 +235,22 @@ body {
     }
 }
 .socialButton-customizable.facebook-button {
-    background-color: #4267b2;
-    color: white;
+    border-color: #a7a7a7;
+    border-radius: 2px;
+    background-color: white;
+    color: #4267b2;
     font-weight: 600;
 }
 .socialButton-customizable.facebook-button:hover {
-    background-color: #2955ad;
+    background-color: #3f7ce8;
     color: white;
 }
 .socialButton-customizable.google-button {
-    background: #4285F4;
-    color: #FFF;
+    border-color: #a7a7a7;
+    border-radius: 2px;
+    padding: auto;
+    background: white;
+    color: #4285F4;
     font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
     font-weight: 500;
 }

@@ -22,7 +22,8 @@ const awsmobile = {
     "federationTarget": "COGNITO_USER_POOLS",
 
     "magiclink_url": "https://api.yungangwu.myinstance.com/magiclink/",
-    "magicresponse_url": "https://api.yungangwu.myinstance.com/magicresponse/" 
+    "magicresponse_url": "https://api.yungangwu.myinstance.com/magicresponse/",
+    "forgot_password_link": "true" 
 };
 
 
