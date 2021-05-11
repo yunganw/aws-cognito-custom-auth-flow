@@ -52,6 +52,12 @@ const routes = [
         name: 'ResetPassword',
         component: ResetPassword,
     },
+    {
+        path: '/toasts',
+        name: 'Toasts',
+        component: () =>
+            import(/* webpackChunkName: "toasts" */ '../views/Toasts.vue'),
+    },
 ];
 
 const router = new VueRouter({

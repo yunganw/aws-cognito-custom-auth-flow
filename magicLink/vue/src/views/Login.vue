@@ -42,7 +42,6 @@
               name="confirm"
               type="submit"
               variant="success"
-              @click="$bvToast.show('example-toast')"
             >
               Confirm
             </b-button>
@@ -94,7 +93,7 @@ export default {
                 console.log("email link sent");
                 this.email = "";
                 this.loading = false;
- 
+
                 alert("Email Sent!");
               })
               .catch(function (error) {
