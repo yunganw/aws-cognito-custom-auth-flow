@@ -10,6 +10,7 @@ body {
     }
 }
 
+
 .panel {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -26,6 +27,7 @@ body {
     border: 0px;
     overflow: hidden;
     border-radius: 0%;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2),0 1px 1px 0 rgba(0,0,0,0.14),0 2px 1px 0 rgba(0,0,0,0.12);
 }
 
 .modal-content-mobile {
@@ -108,7 +110,7 @@ body {
 
 .banner-customizable {
     padding: 2px 0px 2px 0px;
-    background-color: lightgray;
+    background-color: #FF3960;
 }
 
 .label-customizable {

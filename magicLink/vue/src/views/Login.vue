@@ -1,6 +1,11 @@
 <template>
   <div class="container">
     <div class="modal-dialog">
+      <center>
+        <b-toast id="info-toast" title="info" static solid variant="success">
+          {{toastmsg}}
+        </b-toast>
+      </center>
       <div class="modal-content background-customizable modal-content-mobile">
         <div>
           <div class="banner-customizable">
@@ -37,12 +42,7 @@
               ></span>
               Sending...
             </b-button>
-            <b-button
-              v-else
-              name="confirm"
-              type="submit"
-              variant="success"
-            >
+            <b-button v-else name="confirm" type="submit" variant="success">
               Confirm
             </b-button>
             <a class="redirect-customizable" href="/"> Return to login</a>
@@ -67,12 +67,23 @@ export default {
   name: "Login",
   data() {
     return {
+      toastmsg: "",
       email: "",
       loading: false,
-      timer: "",
     };
   },
   methods: {
+    toast(msg) {
+      this.$bvToast.toast(msg, {
+        title: "info.",
+        toaster: "b-toaster-top-center",
+        solid: true,
+        static: true,
+        appendToast: true,
+        // noAutoHide: true,
+        variant: "success",
+      });
+    },
     async login() {
       this.loading = true;
       Auth.configure({
@@ -93,8 +104,9 @@ export default {
                 console.log("email link sent");
                 this.email = "";
                 this.loading = false;
-
-                alert("Email Sent!");
+                this.toastmsg = "Email Sent";
+                this.$bvToast.show ('info-toast');
+                // this.toast("Email Sent!");
               })
               .catch(function (error) {
                 console.log(error);

@@ -1,6 +1,8 @@
 <template>
   <div class="container">
     <div class="modal-dialog">
+      <b-toast id="info-toast" title="info" v-model="toastmsg" static>
+      </b-toast>
       <div class="modal-content background-customizable modal-content-mobile">
         <div>
           <div class="banner-customizable">
@@ -73,6 +75,7 @@ export default {
       newpassword: "",
       newpwddup: "",
       loading: false,
+      toastmsg: "",
     };
   },
   methods: {
