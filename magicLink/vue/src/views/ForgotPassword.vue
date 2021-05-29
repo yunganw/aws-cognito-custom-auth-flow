@@ -1,4 +1,6 @@
 <template>
+<div>
+  <header class="app-header"></header>
   <div class="container">
     <div class="modal-dialog">
       <div class="modal-content background-customizable modal-content-mobile">
@@ -8,7 +10,7 @@
           </div>
         </div>
         <div class="modal-body">
-          <div v-if="state === 'loading'">
+          <div v-if="state === 'initiate'">
             <h2>Forgot password</h2>
             <br />
             <span
@@ -27,8 +29,19 @@
                 required
                 aria-label="username"
                 v-model="username"
+                :disabled="loading"
               />
               <br />
+
+              <b-button
+                variant="success"
+                type="submit"
+                form="forgotpasswordform"
+                value="Submit"
+              >
+                Submiting
+              </b-button>
+              
               <b-button
                 variant="success"
                 type="submit"
@@ -95,19 +108,11 @@
                 </button>
               </form>
             </div>
-            <div v-else>
-              <span>
-                The password reset link has been sent to {{ this.email }}
-              </span>
-              <p></p>
-              <a class="redirect-customizable" href="/">
-                Return to login</a
-              >
-            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 <script>
@@ -120,23 +125,38 @@ export default {
     return {
       username: "",
       email: "",
-      state: "loading",
+      state: "initiate",
       newpassword: "",
       newpwddup: "",
       code: "",
       forgotpasswordlink: "false",
+      loading: false,
     };
   },
   mounted: function () {
     this.forgotpasswordlink = awsconfig.forgot_password_link;
   },
   methods: {
+        toast(msg, type = 'info', autoHide = true) {
+          this.$bvToast.toast(msg, {
+            title: type,
+            toaster: "b-toaster-top-center",
+            solid: true,
+            static: true,
+            appendToast: true,
+            noAutoHide: !autoHide,
+            variant: type === "info"? "success" : "warning",
+          });
+        },
     forgotpassword() {
+      this.loading = true;
       if (this.username.length > 0) {
         Auth.forgotPassword(this.username)
           .then((response) => {
             console.log("forgotpwd: ", response);
             this.email = response.CodeDeliveryDetails.Destination;
+            this.loading = false;
+            this.toast(`The password reset link has been sent to ${this.email}. Please check the email.`, "info", false);
           })
           .catch((err) => console.error(err));
         this.state = "confirmpwd";

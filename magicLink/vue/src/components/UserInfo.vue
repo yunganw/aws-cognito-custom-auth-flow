@@ -98,6 +98,7 @@
              .catch (err => console.log(err));;
    
            Auth.signOut ();
+           this.$router.push ("/");
          }
        }
    }

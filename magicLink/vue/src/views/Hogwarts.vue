@@ -45,6 +45,7 @@ export default {
                     magicstring: this.$route.query.answer,
                 })
                 .then(response => {
+                  console.log ("hgwd:", response);
                     if (200 != response.data.statusCode) {
                         alert (response.data.body);
                         this.$router.push("/");
@@ -52,7 +53,7 @@ export default {
                     else {
                         let obj = JSON.parse(response.data.body);
 
-                        const tokens = obj.IdToken.split('.');
+                        const tokens = obj.AuthenticationResult.IdToken.split('.');
                         const tokenObj = JSON.parse(Buffer.from(tokens[1], 'base64').toString());
                         const currentDate = new Date(tokenObj["exp"]*1000);
                         

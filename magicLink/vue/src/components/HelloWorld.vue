@@ -1,16 +1,17 @@
 <template>
   <div class="container">
     <div class="modal-dialog">
-      <div
-        class="modal-content background-customizable modal-content-mobile visible-xs visible-sm"
-      >
+      <div class="modal-content background-customizable modal-content-mobile visible-xs visible-sm" >
         <div>
           <div class="banner-customizable">
             <center></center>
           </div>
         </div>
         <div class="modal-body">
-          <div v-if="status === 'show'">
+          <div v-if="user !==null">
+            <ChangePassword :user="user" />
+          </div>
+          <div v-else>
             <h2>Login</h2>
             <br />
             <div>
@@ -25,6 +26,7 @@
                     autocapitalize="none"
                     required
                     v-model="username"
+                    :disabled="loading"
                   />
                 </div>
                 <p />
@@ -37,10 +39,22 @@
                     placeholder="Password"
                     required
                     v-model="password"
+                    :disabled="loading"
                   />
                 </div>
                 <p></p>
-                <b-button
+                <b-button v-if="loading"
+                  variant="success"
+                  type="submit"
+                  form="signInForm"
+                  value="Submit"
+                  ><span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              > Sign In</span>
+              </b-button>
+                <b-button v-else
                   variant="success"
                   type="submit"
                   form="signInForm"
@@ -164,16 +178,6 @@
               </div>
             </div>
           </div>
-          <div v-else>
-            <center>
-              <b-spinner variant="primary" label="Spinning" />
-              <p></p>
-              <span>
-                Loading
-                <b-icon icon="three-dots" animation="cylon"></b-icon>
-              </span>
-            </center>
-          </div>
         </div>
       </div>
     </div>
@@ -181,14 +185,17 @@
 </template>
 <script>
 import { Auth, Hub } from "aws-amplify";
+import ChangePassword from "./ChangePassword.vue";
 
 export default {
+  components: { ChangePassword },
   name: "HelloWorld",
   data() {
     return {
-      status: "show",
+      loading: false,
       username: "",
       password: "",
+      user: null,
     };
   },
   mounted: function () {
@@ -199,18 +206,33 @@ export default {
             console.log("user", userData);
             this.transitUserInfo(userData);
           });
+          this.loading = false;
           break;
         case "signOut":
           // setUser(null);
+          this.loading = false;
           break;
         case "signIn_failure":
         case "cognitoHostedUI_failure":
           console.log("Sign in failure", data);
+          this.loading = false;
           break;
       }
     });
   },
   methods: {
+    toast(msg, type = 'info') {
+          this.$bvToast.toast(msg, {
+            title: type,
+            toaster: "b-toaster-top-center",
+            solid: true,
+            static: true,
+            appendToast: true,
+            // noAutoHide: true,
+            variant: type === "info"? "success" : "warning",
+          });
+        },
+
     transitUserInfo(userData) {
       const tokens = userData.signInUserSession.idToken.jwtToken.split(".");
       const tokenObj = JSON.parse(Buffer.from(tokens[1], "base64").toString());
@@ -233,17 +255,25 @@ export default {
     },
 
     async oauthLogin(providerName) {
-      this.status = "loading";
+      this.loading = true;
       Auth.federatedSignIn({ provider: providerName });
     },
     async login() {
-      this.status = "loading";
+      this.loading = true;
       Auth.signIn(this.username, this.password)
         .then((userData) => {
           console.log("user", userData);
-          this.transitUserInfo(userData);
+          if (userData.challengeName === "NEW_PASSWORD_REQUIRED") {
+            this.user = userData;
+            this.loading = false;
+          } else {
+            this.transitUserInfo(userData);
+          }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err.message);
+          this.toast(err.message, "Warning");
+        });
     },
   },
 };

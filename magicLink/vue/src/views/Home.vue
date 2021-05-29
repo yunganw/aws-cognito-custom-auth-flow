@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <header class="app-header"></header>
     <HelloWorld msg=""/>
   </div>
 </template>
