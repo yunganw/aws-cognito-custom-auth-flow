@@ -7,10 +7,6 @@ exports.handler = function(event, context) {
     if (event.request.challengeName == 'CUSTOM_CHALLENGE') {
         event.response.publicChallengeParameters = {};
         event.response.publicChallengeParameters.captchaUrl = 'url/123.jpg';
-        event.response.publicChallengeParameters.USER_ID_FOR_SRP = event.userName;
-        event.response.publicChallengeParameters.SRP_B = 100;
-        event.response.publicChallengeParameters.SALT = 100;
-        event.response.publicChallengeParameters.SECRET_BLOCK = "eaeafe";
         event.response.privateChallengeParameters = {};
         event.response.privateChallengeParameters.answer = 'googleToken';
         event.response.challengeMetadata = 'GOOGLETOKEN_CHALLENGE';
