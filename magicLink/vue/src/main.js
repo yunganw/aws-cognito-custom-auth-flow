@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import Amplify from 'aws-amplify'
+import Amplify from '@aws-amplify/core'
 import awsconfig from './aws-exports';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 

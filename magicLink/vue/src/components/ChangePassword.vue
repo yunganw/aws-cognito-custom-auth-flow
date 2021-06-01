@@ -36,7 +36,7 @@
     </div>
 </template>
 <script>
-import { Auth } from "aws-amplify";
+import { Auth } from "@aws-amplify/auth";
 
 export default {
   name: "ChangePassword",

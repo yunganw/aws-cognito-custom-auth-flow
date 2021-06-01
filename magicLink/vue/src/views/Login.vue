@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { Auth } from "aws-amplify";
+import { Auth } from "@aws-amplify/auth";
 import * as axios from "axios";
 import awsconfig from "../aws-exports";
 // import LoadingButton from "../components/LoadingButton";

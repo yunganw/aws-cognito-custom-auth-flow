@@ -52,7 +52,7 @@
                 class="spinner-border spinner-border-sm"
                 role="status"
                 aria-hidden="true"
-              > Sign In</span>
+              ></span>Sign In
               </b-button>
                 <b-button v-else
                   variant="success"
@@ -184,7 +184,8 @@
   </div>
 </template>
 <script>
-import { Auth, Hub } from "aws-amplify";
+import { Auth } from "@aws-amplify/auth";
+import { Hub } from "@aws-amplify/core";
 import ChangePassword from "./ChangePassword.vue";
 
 export default {
@@ -199,6 +200,9 @@ export default {
     };
   },
   mounted: function () {
+    window.localStorage.removeItem("idtoken", "");
+    window.localStorage.removeItem("username", "");
+
     Hub.listen("auth", ({ payload: { event, data } }) => {
       switch (event) {
         case "cognitoHostedUI":

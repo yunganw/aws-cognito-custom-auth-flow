@@ -15,17 +15,24 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn":  "https://magiclink-yunganw.netlify.app/landing/",
-        "redirectSignOut": "https://magiclink-yunganw.netlify.app/",
+        // https://magiclink-yunganw.netlify.app/landing/
+        "redirectSignIn":  "http://localhost:8080/landing/",
+        "redirectSignOut": "http://localhost:8080/landing/",
+        // "redirectSignOutLinkUser": "http://localhost:8080/landing/", 
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
 
     "magiclink_url": "https://api.yungangwu.myinstance.com/magiclink/",
     "magicresponse_url": "https://api.yungangwu.myinstance.com/magicresponse/",
-    "forgot_password_link": "true" 
+    "forgot_password_link": "true",
+    "idp_prefix_names": [
+        'Google',
+        'Azure',
+        'Facebook'
+    ],
+    
+    "magiclinkuser_url": "https://api.yungangwu.myinstance.com/linkuser/", 
 };
-
-
 
 export default awsmobile;

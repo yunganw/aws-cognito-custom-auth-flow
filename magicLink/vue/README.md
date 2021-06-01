@@ -23,6 +23,9 @@ https://console.aws.amazon.com/dynamodb/home?region=us-east-1#create-table:
 
     lambda execution role for this lambda : AWSLambdaBasicExecutionRole + dynamodb:GetItem
 
+    Add the layer of requests lib for your python
+    https://aws.amazon.com/blogs/compute/upcoming-changes-to-the-python-sdk-in-aws-lambda/
+
 
     d. preSignUp - runtime: nodeJs 14.x
     https://github.com/solariswu/aws-cognito-custom-auth-flow/blob/main/magicLink/cdk/lambda/presignup/presignuplambda.js
@@ -65,6 +68,24 @@ https://console.aws.amazon.com/dynamodb/home?region=us-east-1#create-table:
 
     https://github.com/solariswu/aws-cognito-custom-auth-flow/blob/main/magicLink/vue/src/views/Login.vue#L52
 
+=== Link IdP users with Userpool users ===
+8. Create a lambda function restlinkuser - Runtime Nodejs 14
+    https://github.com/solariswu/aws-cognito-custom-auth-flow/blob/main/magicLink/cdk/lambda/magiclinkuser/restlinkuser.js    
+
+    lambda execution role for this lambda : AWSLambdaBasicExecutionRole + cognito-idp:adminLinkUser + cognito-idp:listuser + cognito-idp:deleteuser
+
+9. Create a new path under APIGateway 
+    c. https://yourapigateway_domain.com/linkuser
+    create Method "GET"
+    use the restlinkuser lambda as the backend, ensure tick the ***"Use Lambda Proxy integration"*** - YES
+    set up Userpool authorizor for this GET method. 
+
+10. Create a new path under APIGateway
+    d. https://yourapigateway_domain.com/valiatetoken
+    Method Get
+    choose 'Mock' as the integration type of this method.
+    set up Userpool authorizor for this GET method.
+ 
 
 ### Project setup
 ```
