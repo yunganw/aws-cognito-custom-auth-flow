@@ -42,9 +42,9 @@ export default {
     console.log("local items:", fedIdtoken, fedUsername);
 
     if (fedIdtoken && fedIdtoken.length > 0) {
-      window.localStorage.removeItem("idtoken", "");
-      window.localStorage.removeItem("username", "");
-      // window.localStorage.setItem("idpname", "");
+      window.localStorage.removeItem("idtoken");
+      window.localStorage.removeItem("username");
+      window.localStorage.removeItem("idpname");
       
       this.exchangeToken(fedUsername, fedIdtoken);
     }
@@ -77,7 +77,7 @@ export default {
                     "username",
                     userData.attributes.email 
                   );
-                  // window.localStorage.setItem("idpname", matches[0]);
+                  window.localStorage.setItem("idpname", matches[0]);
 
                   // console.log('awsconfig', awsconfig);
                   // let oauth = {
@@ -100,7 +100,9 @@ export default {
                   // this.loading = false;
                   // this.toast(error.message, "warning");
                 });
-            } else this.transitUserInfo(userData);
+            } 
+            else // this.transitUserInfo(userData);
+              this.$router.push("/userinfo");
           });
           break;
         case "signOut":
@@ -114,26 +116,26 @@ export default {
     });
   },
   methods: {
-    transitUserInfo(userData) {
-      const tokens = userData.signInUserSession.idToken.jwtToken.split(".");
-      const tokenObj = JSON.parse(Buffer.from(tokens[1], "base64").toString());
-      const currentDate = new Date(tokenObj["exp"] * 1000);
+    // transitUserInfo(userData) {
+    //   const tokens = userData.signInUserSession.idToken.jwtToken.split(".");
+    //   const tokenObj = JSON.parse(Buffer.from(tokens[1], "base64").toString());
+    //   const currentDate = new Date(tokenObj["exp"] * 1000);
 
-      this.$router.push({
-        name: "UserInfo",
-        params: {
-          username: tokenObj["cognito:username"],
-          role: tokenObj["cognito:roles"],
-          group: tokenObj["cognito:groups"],
-          email: tokenObj["email"],
-          exp: currentDate.toLocaleString(),
-          timezone: currentDate
-            .toString()
-            .match(/\((.*)\)/)
-            .pop(),
-        },
-      });
-    },
+    //   this.$router.push({
+    //     name: "UserInfo",
+    //     params: {
+    //       username: tokenObj["cognito:username"],
+    //       role: tokenObj["cognito:roles"],
+    //       group: tokenObj["cognito:groups"],
+    //       email: tokenObj["email"],
+    //       exp: currentDate.toLocaleString(),
+    //       timezone: currentDate
+    //         .toString()
+    //         .match(/\((.*)\)/)
+    //         .pop(),
+    //     },
+    //   });
+    // },
     async exchangeToken(username, federatedUserIdToken) {
       Auth.configure({
         authenticationFlowType: "CUSTOM_AUTH",
@@ -148,7 +150,8 @@ export default {
             Auth.sendCustomChallengeAnswer(user, challengeResponse)
               .then((user) => {
                 console.log("exchanged:", user);
-                this.transitUserInfo(user);
+                this.$router.push("/userinfo");
+                // this.transitUserInfo(user);
               }) //user)
               .catch((err) => console.log(err));
           } else {

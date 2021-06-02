@@ -65,26 +65,26 @@ export default {
         variant: type === "info" ? "success" : type,
       });
     },
-    transitUserInfo(userData) {
-      const tokens = userData.signInUserSession.idToken.jwtToken.split(".");
-      const tokenObj = JSON.parse(Buffer.from(tokens[1], "base64").toString());
-      const currentDate = new Date(tokenObj["exp"] * 1000);
+    // transitUserInfo(userData) {
+    //   const tokens = userData.signInUserSession.idToken.jwtToken.split(".");
+    //   const tokenObj = JSON.parse(Buffer.from(tokens[1], "base64").toString());
+    //   const currentDate = new Date(tokenObj["exp"] * 1000);
 
-      this.$router.push({
-        name: "UserInfo",
-        params: {
-          username: tokenObj["cognito:username"],
-          role: tokenObj["cognito:roles"],
-          group: tokenObj["cognito:groups"],
-          email: tokenObj["email"],
-          exp: currentDate.toLocaleString(),
-          timezone: currentDate
-            .toString()
-            .match(/\((.*)\)/)
-            .pop(),
-        },
-      });
-    },
+    //   this.$router.push({
+    //     name: "UserInfo",
+    //     params: {
+    //       username: tokenObj["cognito:username"],
+    //       role: tokenObj["cognito:roles"],
+    //       group: tokenObj["cognito:groups"],
+    //       email: tokenObj["email"],
+    //       exp: currentDate.toLocaleString(),
+    //       timezone: currentDate
+    //         .toString()
+    //         .match(/\((.*)\)/)
+    //         .pop(),
+    //     },
+    //   });
+    // },
     changePassword() {
       console.log("pwd change.");
       if (this.newpassword.length < 5) {
@@ -101,7 +101,8 @@ export default {
             this.loading = false;
             // at this time the user is logged in if no MFA required
             console.log(user);
-            this.transitUserInfo(user);
+            this.$router.push("/userinfo");
+            // this.transitUserInfo(user);
           })
           .catch((e) => {
             this.loading = false;
