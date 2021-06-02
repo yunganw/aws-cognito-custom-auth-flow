@@ -27,6 +27,10 @@
               <p class="user-content">
                 {{ this.timezone ? this.timezone : "" }}
               </p>
+              <p class="user-title">Linked IdPs:</p>
+              <p class="user-content">
+                {{this.idp_names}}
+              </p>
             </div>
           </div>
           <div class="main-menu">
@@ -76,6 +80,7 @@ export default {
       exp: "",
       timezone: "",
       gravatar: "",
+      idp_names: ""
     };
   },
   mounted: function () {
@@ -112,6 +117,14 @@ export default {
       const tokenObj = JSON.parse(Buffer.from(tokens[1], "base64").toString());
       const currentDate = new Date(tokenObj["exp"] * 1000);
 
+      console.log ('tokenobj', tokenObj);
+        
+      if (tokenObj) {
+        for (let i = 0; i < tokenObj.identities.length; i++) {
+            this.idp_names = this.idp_names + tokenObj.identities[i].providerName + ' ';
+          }
+        }
+  
       (this.username = tokenObj["cognito:username"]),
         (this.role = tokenObj["cognito:roles"]),
         (this.group = tokenObj["cognito:groups"]),
